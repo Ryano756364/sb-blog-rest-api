@@ -1,10 +1,10 @@
-package com.ryanpodell.sbrestapi;
+package com.ryanpodell.sbblogrestapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SbRestApiApplicationTests {
+class SbBlogRestApiApplicationTests {
 
 	@Test
 	void contextLoads() {
