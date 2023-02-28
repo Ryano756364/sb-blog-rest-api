@@ -1,8 +1,9 @@
 package com.ryanpodell.sbblogrestapi.controller;
 import com.ryanpodell.sbblogrestapi.bean.Student;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +29,40 @@ public class StudentController {
         students.add(new Student(2, "Dave", "Smith"));
         students.add(new Student(2, "Adam", "Charles"));
         return students;
+    }
+
+    //Want to set up path variable with method
+    //{id} - URI template variable
+    //http://localhost:8080/students/1
+    @GetMapping("students/{id}")
+    public Student studentPathVariable(@PathVariable("id") int StudentId){
+        return new Student(StudentId, "Ryan", "LastName");
+    }
+
+    //http://localhost:8080/students/1/ryan/odell
+    @GetMapping("students/{id}/{first-name}/{last-name}")
+    public Student studentFullPathVariable(
+            @PathVariable("id") int StudentId,
+            @PathVariable("first-name") String firstName,
+            @PathVariable("last-name") String lastName){
+        return new Student(StudentId, firstName, lastName);
+    }
+
+    //Spring boot REST API with Request Param
+    //http://localhost:8080/students?id=1
+    @GetMapping("students/query?id=1")
+    public Student studentRequestVariable(@RequestParam int id){
+        return new Student(id, "StudentFirstName", "StudentLastName");
+    }
+
+    //Spring boot REST API with multiple Request Param
+    //http://localhost:8080/students?id=1&firstname=Ryan&lastName=Thomas
+    //User sends in ID, first name, and last name, then student object is returned
+    @GetMapping("students/query")
+    public Student studentRequestMultipleVariable(
+            @RequestParam int id,
+            @RequestParam String firstName,
+            @RequestParam String lastname){
+        return new Student(id, firstName, lastname);
     }
 }
