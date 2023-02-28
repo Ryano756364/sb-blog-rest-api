@@ -65,4 +65,8 @@ public class StudentController {
             @RequestParam String lastname){
         return new Student(id, firstName, lastname);
     }
+
+    //PathVariable versus RequestParam
+    //PathVariable is used to bind URI data to method
+    //RequestParam extracts parameters from URI
 }
