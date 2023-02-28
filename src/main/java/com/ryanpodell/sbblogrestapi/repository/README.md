@@ -1,0 +1,1 @@
+### All spring data JPA repos will be stored here

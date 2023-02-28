@@ -1,5 +1,4 @@
 package com.ryanpodell.sbblogrestapi.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
