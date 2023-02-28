@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
     // http://localhost:8080/student
@@ -25,7 +26,7 @@ public class StudentController {
     }
 
     //Want to return list of students as REST API
-    @GetMapping("students")
+    @GetMapping()
     public ResponseEntity<List<Student>> getStudents(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(2, "Ryan", "Tommy"));
@@ -37,14 +38,14 @@ public class StudentController {
     //Want to set up path variable with method
     //{id} - URI template variable
     //http://localhost:8080/students/1
-    @GetMapping("students/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int StudentId){
         Student student = new Student(StudentId, "Ryan", "LastName");
         return ResponseEntity.ok(student);
     }
 
     //http://localhost:8080/students/1/ryan/odell
-    @GetMapping("students/{id}/{first-name}/{last-name}")
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> studentFullPathVariable(
             @PathVariable("id") int StudentId,
             @PathVariable("first-name") String firstName,
@@ -55,7 +56,7 @@ public class StudentController {
 
     //Spring boot REST API with Request Param
     //http://localhost:8080/students?id=1
-    @GetMapping("students/query?id=1")
+    @GetMapping("query?id=1")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int id){
         Student student = new Student(id, "StudentFirstName", "StudentLastName");
         return ResponseEntity.ok(student);
@@ -64,7 +65,7 @@ public class StudentController {
     //Spring boot REST API with multiple Request Param
     //http://localhost:8080/students?id=1&firstname=Ryan&lastName=Thomas
     //User sends in ID, first name, and last name, then student object is returned
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestMultipleVariable(
             @RequestParam int id,
             @RequestParam String firstName,
@@ -79,7 +80,7 @@ public class StudentController {
 
     //Spring boot REST API that handles HTTP POST Request
     //Need @PostMapping and @RequestBody
-    @PostMapping("students/create")
+    @PostMapping("create")
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student){
         System.out.println(student.getId());
@@ -89,7 +90,7 @@ public class StudentController {
     }
 
     //Put request to updating existing data
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(
             @RequestBody Student student,  //remember that this grabs the JSON body and converts to Java object
             @PathVariable("id") int studentId){
@@ -99,7 +100,7 @@ public class StudentController {
     }
 
     //Delete data
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId){
         System.out.println(studentId);
         return ResponseEntity.ok("Student deleted successfully!");
