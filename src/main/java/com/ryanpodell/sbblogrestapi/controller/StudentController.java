@@ -2,7 +2,6 @@ package com.ryanpodell.sbblogrestapi.controller;
 import com.ryanpodell.sbblogrestapi.bean.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +87,12 @@ public class StudentController {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
         return student;
+    }
+
+    //Delete data
+    @DeleteMapping("students/{id}/delete")
+    public String deleteStudent(@PathVariable("id") int studentId){
+        System.out.println(studentId);
+        return "Student deleted successfully!";
     }
 }
