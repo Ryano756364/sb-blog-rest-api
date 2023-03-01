@@ -4,10 +4,9 @@ import com.ryanpodell.sbblogrestapi.payload.PostDto;
 import com.ryanpodell.sbblogrestapi.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController  //Developing REST API's so that is why we are using RestController, don't forget this is @Controller and @ResponseBody annotation
 @RequestMapping("/api/posts")
@@ -21,11 +20,15 @@ public class PostController {
     }
 
     //Rest endpoint!
-
     //create blog post API
-
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){  //converts JSON into Java object
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
+    }
+
+    //get all posts rest api
+    @GetMapping
+    public List<PostDto> getAllPosts(){
+        return postService.getAllPosts();
     }
 }
