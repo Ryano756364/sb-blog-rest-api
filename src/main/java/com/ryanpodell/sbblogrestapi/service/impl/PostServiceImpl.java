@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {  //the plan is to inject t
 
     @Override
     public PostDto getPostById(long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        Post post = checkIfPostExistsById(id);
         return mapToDto(post);
     }
 
@@ -54,7 +54,7 @@ public class PostServiceImpl implements PostService {  //the plan is to inject t
     public PostDto updatePost(PostDto postDto, long id) {
         //Need to get post by id, update fields, and then save to database
         //If post doesn't exist with ID, we'll throw the exception
-        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        Post post = checkIfPostExistsById(id);
 
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
@@ -64,8 +64,18 @@ public class PostServiceImpl implements PostService {  //the plan is to inject t
         return mapToDto(updatedPost);
     }
 
+    @Override
+    public void deletePostById(long id) {
+        Post post = checkIfPostExistsById(id);
+        postRepository.delete(post);
+    }
+
 
     //Helper methods
+    private Post checkIfPostExistsById(long id){
+        return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+    }
+
     private PostDto mapToDto(Post post){
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
