@@ -50,6 +50,20 @@ public class PostServiceImpl implements PostService {  //the plan is to inject t
         return mapToDto(post);
     }
 
+    @Override
+    public PostDto updatePost(PostDto postDto, long id) {
+        //Need to get post by id, update fields, and then save to database
+        //If post doesn't exist with ID, we'll throw the exception
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+
+        post.setTitle(postDto.getTitle());
+        post.setDescription(postDto.getDescription());
+        post.setContent(postDto.getContent());
+
+        Post updatedPost = postRepository.save(post);
+        return mapToDto(updatedPost);
+    }
+
 
     //Helper methods
     private PostDto mapToDto(Post post){
