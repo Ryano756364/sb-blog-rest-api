@@ -1,5 +1,6 @@
 package com.ryanpodell.sbblogrestapi.service.impl;
 import com.ryanpodell.sbblogrestapi.entity.Post;
+import com.ryanpodell.sbblogrestapi.exception.ResourceNotFoundException;
 import com.ryanpodell.sbblogrestapi.payload.PostDto;
 import com.ryanpodell.sbblogrestapi.repository.PostRepository;
 import com.ryanpodell.sbblogrestapi.service.PostService;
@@ -41,6 +42,12 @@ public class PostServiceImpl implements PostService {  //the plan is to inject t
         List<PostDto> toReturn = posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
 
         return toReturn;  //redundant but used for easy reading
+    }
+
+    @Override
+    public PostDto getPostById(long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        return mapToDto(post);
     }
 
 
