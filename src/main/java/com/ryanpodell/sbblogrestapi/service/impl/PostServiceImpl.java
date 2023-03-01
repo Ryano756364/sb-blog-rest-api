@@ -6,6 +6,8 @@ import com.ryanpodell.sbblogrestapi.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostServiceImpl implements PostService {  //the plan is to inject this class into other classes
 
@@ -38,5 +40,10 @@ public class PostServiceImpl implements PostService {  //the plan is to inject t
 
         return postResponse;
         //Now we will inject this class into controller which will call the method
+    }
+
+    @Override
+    public List<PostDto> getAllPosts() {
+        return null;
     }
 }
